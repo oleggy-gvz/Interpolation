@@ -21,21 +21,19 @@ MainWindow::~MainWindow()
 void MainWindow::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
+    //------------------------------------
 
-    shared_ptr<Interpolation> inter(new CubicSplineInterpolation{{-1, 0.756802495},
-                                                                 {-0.5, -0.909297427},
-                                                                 {0, 0},
-                                                                 {0.5, 0.909297427},
-                                                                 {1, -0.756802495}});
+    setWindowTitle(tr("Интерполяция"));
+    ui->groupBox->setTitle(tr("График"));
+    ui->comboBox->addItem(tr("Линейная"), 0);
+    ui->comboBox->addItem(tr("Кубический сплайн"), 1);
 
-    /*shared_ptr<Interpolation> inter(new LinearInterpolation{{-1, 0.756802495},
-                                                                 {-0.5, -0.909297427},
-                                                                 {0, 0},
-                                                                 {0.5, 0.909297427},
-                                                                 {1, -0.756802495}});*/
+    vector<pair<double, double>> points = {{-1, 0.756802495}, {-0.5, -0.909297427}, {0, 0}, {0.5, 0.909297427}, {1, -0.756802495}};
+    shared_ptr<Interpolation> inter;
+    inter = shared_ptr<Interpolation>(new CubicSplineInterpolation(points));
+    //inter = shared_ptr<Interpolation>(new LinearInterpolation(points));
 
     // Рисуем график y=x*x
-
     // Сгенерируем данные
     // Для этого создадим два массива точек:
     // один для созранения x координат точек,

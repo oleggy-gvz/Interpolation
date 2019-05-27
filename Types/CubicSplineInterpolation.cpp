@@ -10,6 +10,11 @@ CubicSplineInterpolation::CubicSplineInterpolation(initializer_list<pair<double,
     setPoints(p);
 }
 
+CubicSplineInterpolation::CubicSplineInterpolation(vector<pair<double, double>> p)
+{
+    setPoints(p);
+}
+
 void CubicSplineInterpolation::calculateRatios()
 {
     if (points.size() < 3)

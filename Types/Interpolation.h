@@ -14,9 +14,11 @@ protected:
     virtual void calculateRatios() = 0;
 
 public:
+    Interpolation();
     void addPoint(double x, double y);
     void setPoints(initializer_list<double> x, initializer_list<double> y);
     void setPoints(initializer_list<pair<double, double>> p);
+    void setPoints(vector<pair<double, double>> p);
     double getLowerBoundArgument();
     double getUpperBoundArgument();
 

@@ -20,6 +20,7 @@ private:
 public:
     CubicSplineInterpolation(std::initializer_list<double> x, std::initializer_list<double> y);
     CubicSplineInterpolation(initializer_list<pair<double, double>> p);
+    CubicSplineInterpolation(vector<pair<double, double>> p);
     double getFunction(double x);
 };
 

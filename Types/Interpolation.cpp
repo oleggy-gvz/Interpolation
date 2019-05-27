@@ -1,5 +1,8 @@
 #include "Interpolation.h"
 
+Interpolation::Interpolation()
+{}
+
 void Interpolation::addPoint(double x, double y)
 {
     points[x] = y;
@@ -23,6 +26,16 @@ void Interpolation::setPoints(initializer_list<double> x, initializer_list<doubl
 }
 
 void Interpolation::setPoints(initializer_list<pair<double, double>> p)
+{
+    points.clear();
+    for(const auto& item : p)
+    {
+        points[item.first] = item.second;
+    }
+    calculateRatios();
+}
+
+void Interpolation::setPoints(vector<pair<double, double>> p)
 {
     points.clear();
     for(const auto& item : p)
