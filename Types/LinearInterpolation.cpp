@@ -10,6 +10,11 @@ LinearInterpolation::LinearInterpolation(initializer_list<pair<double, double>> 
     setPoints(p);
 }
 
+LinearInterpolation::LinearInterpolation(vector<pair<double, double>> p)
+{
+    setPoints(p);
+}
+
 void LinearInterpolation::calculateRatios()
 {
     if (points.size() < 2)

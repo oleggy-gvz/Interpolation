@@ -17,6 +17,7 @@ private:
 public:
     LinearInterpolation(std::initializer_list<double> x, std::initializer_list<double> y);
     LinearInterpolation(initializer_list<pair<double, double>> p);
+    LinearInterpolation(vector<pair<double, double>> p);
     double getFunction(double x);
 };
 
