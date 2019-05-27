@@ -28,6 +28,12 @@ void MainWindow::showEvent(QShowEvent* event)
                                                                  {0.5, 0.909297427},
                                                                  {1, -0.756802495}});
 
+    /*shared_ptr<Interpolation> inter(new LinearInterpolation{{-1, 0.756802495},
+                                                                 {-0.5, -0.909297427},
+                                                                 {0, 0},
+                                                                 {0.5, 0.909297427},
+                                                                 {1, -0.756802495}});*/
+
     // Рисуем график y=x*x
 
     // Сгенерируем данные
