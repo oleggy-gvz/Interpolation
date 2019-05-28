@@ -12,9 +12,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->comboBox->addItem(tr("Линейная"), 0);
     ui->comboBox->addItem(tr("Кубический сплайн"), 1);
 
-    ui->comboBox->setCurrentIndex(0);
-    index = 0;
-
     vector<pair<double, double>> points = {{-1, 0.756802495}, {-0.5, -0.909297427}, {0, 0}, {0.5, 0.909297427}, {1, -0.756802495}};
     inter.push_back(shared_ptr<Interpolation>(new LinearInterpolation(points)));
     inter.push_back(shared_ptr<Interpolation>(new CubicSplineInterpolation(points)));
@@ -25,12 +22,16 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-// show method
 void MainWindow::showEvent(QShowEvent* event)
 {
     QWidget::showEvent(event);
     //------------------------------------
+    ui->comboBox->setCurrentIndex(0); // по умолчанию выбран первый элемент в comboBox
+    emit on_comboBox_activated(0); // генерируем сигнал выбора первого элемента в comboBox
+}
 
+void MainWindow::on_comboBox_activated(int index)
+{
     // Рисуем график y=x*x
     // Сгенерируем данные
     // Для этого создадим два массива точек:
@@ -77,9 +78,4 @@ void MainWindow::showEvent(QShowEvent* event)
 
     // И перерисуем график на нашем widget
     ui->widget->replot();
-}
-
-void MainWindow::on_comboBox_currentIndexChanged(int i)
-{
-    index = i;
 }

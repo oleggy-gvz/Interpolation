@@ -17,7 +17,6 @@ class MainWindow : public QMainWindow
 
 private:
     vector<shared_ptr<Interpolation>> inter;
-    int index;
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -25,7 +24,7 @@ public:
 
 private slots:
     void showEvent(QShowEvent* event);
-    void on_comboBox_currentIndexChanged(int i);
+    void on_comboBox_activated(int index);
 
 private:
     Ui::MainWindow *ui;
