@@ -6,6 +6,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    setWindowTitle(tr("Интерполяция"));
+    ui->groupBox->setTitle(tr("График"));
+    ui->comboBox->addItem(tr("Линейная"), 0);
+    ui->comboBox->addItem(tr("Кубический сплайн"), 1);
+
+    ui->comboBox->setCurrentIndex(0);
+    index = 0;
+
+    vector<pair<double, double>> points = {{-1, 0.756802495}, {-0.5, -0.909297427}, {0, 0}, {0.5, 0.909297427}, {1, -0.756802495}};
+    inter.push_back(shared_ptr<Interpolation>(new LinearInterpolation(points)));
+    inter.push_back(shared_ptr<Interpolation>(new CubicSplineInterpolation(points)));
 }
 
 MainWindow::~MainWindow()
@@ -19,24 +31,14 @@ void MainWindow::showEvent(QShowEvent* event)
     QWidget::showEvent(event);
     //------------------------------------
 
-    setWindowTitle(tr("Интерполяция"));
-    ui->groupBox->setTitle(tr("График"));
-    ui->comboBox->addItem(tr("Линейная"), 0);
-    ui->comboBox->addItem(tr("Кубический сплайн"), 1);
-
-    vector<pair<double, double>> points = {{-1, 0.756802495}, {-0.5, -0.909297427}, {0, 0}, {0.5, 0.909297427}, {1, -0.756802495}};
-    inter.push_back(shared_ptr<Interpolation>(new LinearInterpolation(points)));
-    inter.push_back(shared_ptr<Interpolation>(new CubicSplineInterpolation(points)));
-    _index = 0;
-
     // Рисуем график y=x*x
     // Сгенерируем данные
     // Для этого создадим два массива точек:
     // один для созранения x координат точек,
     // а второй для y соответственно
 
-    double a = inter[_index]->getLowerBoundArgument(); // Начало интервала, где рисуем график по оси Ox
-    double b = inter[_index]->getUpperBoundArgument(); // Конец интервала, где рисуем график по оси Ox
+    double a = inter[index]->getLowerBoundArgument(); // Начало интервала, где рисуем график по оси Ox
+    double b = inter[index]->getUpperBoundArgument(); // Конец интервала, где рисуем график по оси Ox
     double h = 0.01; // Шаг, с которым будем пробегать по оси Ox
 
     int N = (b-a) / h + 2; // Вычисляем количество точек, которые будем отрисовывать
@@ -47,7 +49,7 @@ void MainWindow::showEvent(QShowEvent* event)
     for (double X = a; X <= b; X += h)// Пробегаем по всем точкам
     {
         x[i] = X;
-        y[i] = inter[_index]->getFunction(X);// Формула нашей функции
+        y[i] = inter[index]->getFunction(X);// Формула нашей функции
         i++;
     }
     ui->widget->clearGraphs(); // Если нужно, но очищаем все графики
@@ -77,7 +79,7 @@ void MainWindow::showEvent(QShowEvent* event)
     ui->widget->replot();
 }
 
-void MainWindow::on_comboBox_currentIndexChanged(int index)
+void MainWindow::on_comboBox_currentIndexChanged(int i)
 {
-    _index = index;
+    index = i;
 }
